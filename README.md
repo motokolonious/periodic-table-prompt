@@ -1,5 +1,11 @@
 Buffer & print periodic table file|lines
 
+## The File: periodictable
+- Comma separated columns
+- LF line separators (disallow windows style carriage return on check-in, see .gitattributes file)
+- All byte/character positions known/defined.
+- Data is not modified by the program.
+
 ## TODO
 - Add periodic table file rows for all elements
 - Iterate read() to allow full buffering when file system data is unavailable
