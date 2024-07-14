@@ -1,6 +1,6 @@
-#include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <string.h>
 
 #define HEADER 55 /* Line lengths include separators, but are later replaced with null terminators */
 #define HYDROGEN 30
@@ -31,7 +31,6 @@ void strreaduntil(int fd, char *buffer, ssize_t bytestoread)
         ssize_t readcount = read(fd, bufferoffset, bytesremaining);
         if (readcount < 0)
         {
-            fprintf(stderr, "Read error."); // Use errno and/or perror
             return;
         }
         if (readcount == 0)
@@ -53,8 +52,22 @@ void readfullperiodictable(char *fullfilebuffer)
 
 int main(int argc, char *argv[])
 {
+    char inputarray[100];
+    while(strncmp(inputarray, "exit", 4) != 0)
+    {
+        write(STDOUT_FILENO, "conschem> ", 10);
+        ssize_t readcount = read(STDIN_FILENO, inputarray, 100); //todo: use fn to read remaining bytes
+        if (strncmp(inputarray, "print", 5) == 0)
+        {
+            char fullperiodictable[PTBYTES];
+            readfullperiodictable(fullperiodictable);
+            write(STDOUT_FILENO, fullperiodictable, PTBYTES);
+            write(STDOUT_FILENO, "\n", 1);
+        }
+    }
+
     /* File is formatted as comma delimited with LF line separators */
-    if (argc > 1)
+    /*if (argc > 1)
     {
         char fullperiodictable[PTBYTES];
         readfullperiodictable(fullperiodictable);
@@ -75,5 +88,5 @@ int main(int argc, char *argv[])
         strsingleline(fd, helium, HELIUM);
         printf("%s\n", helium);
         close(fd);
-    }
+    }*/
 }
