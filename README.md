@@ -1,4 +1,7 @@
-Buffer & print periodic table file|lines
+Buffer & print periodic table file|lines. Provide as much information as textually possible about elements and their relationships to each other.
+
+## Just for fun:
+- Don't use standard lib (stdio.h) functions at all!
 
 ## The File: periodictable
 - Comma separated columns
