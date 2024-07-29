@@ -1,6 +1,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
+#include "ptsearch.h"
 
 #define HEADER 55 /* Line lengths include separators, but are later replaced with null terminators */
 #define HYDROGEN 30
@@ -64,6 +65,12 @@ int main(int argc, char *argv[])
             write(STDOUT_FILENO, fullperiodictable, PTBYTES);
             write(STDOUT_FILENO, "\n", 1);
         }
+
+        //inputs that aren't other commands should be evaluated as possible searches
+        char searchresult[100];
+        int searchfailure = ptsearch("H", searchresult, 100);
+        if (searchfailure == 0) write(STDOUT_FILENO, searchresult, strlen(searchresult));
+        else write(STDOUT_FILENO, "No search results found!\n", 26);
     }
 
     /* File is formatted as comma delimited with LF line separators */
