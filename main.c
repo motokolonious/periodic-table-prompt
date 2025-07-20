@@ -24,7 +24,11 @@ int main(int argc, char *argv[])
         {
             char searchresult[100];
             int searchfailure = ptsearch("H", searchresult, 100);
-            if (searchfailure == 0) write(STDOUT_FILENO, searchresult, strlen(searchresult));
+            if (searchfailure == 0)
+            {
+                write(STDOUT_FILENO, searchresult, strlen(searchresult));
+                write(STDOUT_FILENO, "\n", 1);
+            }
             else write(STDOUT_FILENO, "No search results found!\n", 26);
         }
     }
