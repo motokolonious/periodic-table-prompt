@@ -11,6 +11,8 @@ int main(int argc, char *argv[])
     {
         write(STDOUT_FILENO, "conschem> ", 10);
         ssize_t readcount = read(STDIN_FILENO, inputarray, 100); //todo: use fn to read remaining bytes
+
+        //print some periodic table summarization text
         if (strncmp(inputarray, "print", 5) == 0)
         {
             char fullperiodictable[PTBYTES];
@@ -22,8 +24,9 @@ int main(int argc, char *argv[])
         //inputs that aren't other commands should be evaluated as possible searches
         if (strncmp(inputarray, "exit", 4) != 0)
         {
+            inputarray[1] = '\0';//For now null terminate for 1-letter searches.
             char searchresult[100];
-            int searchfailure = ptsearch("H", searchresult, 100);
+            int searchfailure = ptsearch(inputarray, searchresult, 100);
             if (searchfailure == 0)
             {
                 write(STDOUT_FILENO, searchresult, strlen(searchresult));
