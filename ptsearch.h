@@ -2,20 +2,15 @@
 #include <unistd.h>
 #include "stdint.h"
 #include "ptdef.h"
-#include "Element.h"
-
-struct Element hydrogen = { .name = "hydrogen", .abbrev = "H", .atnum = 1 };
-
-int8_t ELS_LN = 1;//There are currently only 118 known elements and int8_t allows 255.
-struct Element els[1] = { { .name = "hydrogen", .abbrev = "H", .atnum = 1 } };//Using ELS_LN here instead of numeric literal causes file scope error. Why?
+#include "elements.h"
 
 int ptsearch(char *searchterm, char *result, size_t maxresultsize)
 {
     if (maxresultsize < 100) return 1;
-
-    for (int8_t i = 0; i < ELS_LN; i++)
+    init_ptelements();
+    for (int8_t i = 0; i < PTELS_LN; i++)
     {
-        if (strncmp(searchterm, els[i].abbrev, 2) == 0)
+        if (strncmp(searchterm, ptelements[i].abbrev, 1) == 0)
         {
             strcpy(result, "MATCH FOUND");
             return 0;
